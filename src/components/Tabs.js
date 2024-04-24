@@ -9,12 +9,14 @@ const Tabs = () => {
     {
       name: 'Task 1',
       description: 'Description of Task 1',
-      dates: ['2024-04-25', '2024-04-26']
+      dates: ['2024-04-25', '2024-04-26'],
+      jackpot: 50
     },
     {
       name: 'Task 2',
       description: 'Description of Task 2',
-      dates: ['2024-04-27', '2024-04-28']
+      dates: ['2024-04-27', '2024-04-28'],
+      jackpot: 450
     }
   ]);
 
@@ -35,9 +37,10 @@ const Tabs = () => {
     const newTask = {
       name: taskData.title,
       description: taskData.description,
-      dates: [taskData.dueDate]
+      dates: [taskData.dueDate],
+      jackpot: taskData.jackpot
     };
-    
+    console.log(newTask)
     // Update the tasks state by adding the new task to the existing tasks array
     setMyTasks([...myTasks, newTask]);
 

@@ -6,14 +6,16 @@ const NewTaskForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [jackpot, setJackpot] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, description, dueDate });
+    onSubmit({ title, description, dueDate, jackpot });
     // Clear form fields after submission
     setTitle('');
     setDescription('');
     setDueDate('');
+    setJackpot('')
   };
 
   return (
@@ -47,6 +49,15 @@ const NewTaskForm = ({ onSubmit }) => {
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
         />
+      </div>
+      <div className="form-group">
+        <label htmlFor="jacpot">jacpot:</label>
+        <textarea
+          id="jacpot"
+          className="form-control"
+          value={jackpot}
+          onChange={(e) => setJackpot(e.target.value)}
+        ></textarea>
       </div>
       <button type="submit" className="btn btn-primary">Add Task</button>
     </form>
