@@ -1,0 +1,36 @@
+/* src/components/Settings.css */
+
+.settings {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Initially hide the settings panel */
+    width: 250px;
+    height: 100%;
+    background-color: #f8f9fa;
+    transition: right 0.3s ease;
+  }
+  
+  .settings.open {
+    right: 0; /* Show the settings panel when isOpen is true */
+  }
+  
+  .settings-header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .settings-content {
+    padding: 20px;
+  }
+  
