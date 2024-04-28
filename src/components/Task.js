@@ -17,12 +17,12 @@ const Task = ({ name, description, dates }) => {
                     </li>
                 ))}
             </ul>
-            <div class="row">
-                <div class="col-auto">
-                    <p class="card-text">Jackpot:</p>
+            <div className="row">
+                <div className="col-auto">
+                    <p className="card-text">Jackpot:</p>
                 </div>
-                <div class="col-auto">
-                    <p class="card-text">0</p>
+                <div className="col-auto">
+                    <p className="card-text">0</p>
                 </div>
             </div>
 

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import NewTaskForm from './NewTaskForm';
 import Task from './Task';
@@ -30,23 +32,31 @@ const Tabs = () => {
     setShowNewTaskForm(!showNewTaskForm);
   };
 
-  const handleNewTaskSubmit = (taskData) => {
 
-    console.log(taskData)
+  const handleNewTaskSubmit = async (taskData) => {
     // Create a new task object
     const newTask = {
-      name: taskData.title,
+      task_name: taskData.title,
       description: taskData.description,
+      creator_id: 14,
       dates: [taskData.dueDate],
       jackpot: taskData.jackpot
     };
     console.log(newTask)
-    // Update the tasks state by adding the new task to the existing tasks array
     setMyTasks([...myTasks, newTask]);
-
+    try {
+      // Make a POST request to the API endpoint
+      const response = await axios.post('http://localhost:8000/tasks/', newTask); // TODO 
+      console.log('Task created successfully:', response.data);
+      // Update the tasks state or perform any necessary actions
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
+  
     // Close the new task form
     setShowNewTaskForm(false);
   };
+  
 
   return (
     <div >
