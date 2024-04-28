@@ -5,13 +5,13 @@ const ProfileInfo = ({ userProfile }) => {
   return (
     <div style={{ fontSize: 10 }}>
       <img
-        src={userProfile.profilePicture}
+        src={userProfile ? userProfile.profilePicture : ""}
         alt="Profile"
         style={{ width: "100px", height: "100px" }}
       />
       <br />
-      <strong>{userProfile.name}</strong>
-      <p>Email: {userProfile.email}</p>
+      <strong>{userProfile ? userProfile.name : ""}</strong>
+      <p>Email: {userProfile ? userProfile.email : ""}</p>
       {/* Display other profile information */}
     </div>
   );

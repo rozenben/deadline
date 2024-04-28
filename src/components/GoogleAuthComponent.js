@@ -43,12 +43,17 @@ const GoogleAuthComponent = () => {
         password: "",
       };
       const userId = await createUser(userData);
-      console.log("user id: ", userId);
+      console.log(
+        "user id: ",
+        userId,
+        "result.user.photoURL : ",
+        result.user.photoURL
+      );
       const userObject = {
         name: result.user.displayName,
         email: result.user.email,
         userId: userId,
-        // picture: result.user.photoURL,
+        picture: result.user.photoURL,
       };
       updateUser(userObject); // Update user context with the obtained user data
     } catch (error) {

@@ -1,20 +1,33 @@
 // src/components/Settings.js
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Settings.css";
 import Profile from "./Profile";
 import LanguageSelector from "./LanguageSelector";
 import { UserContext } from "./MainProvider";
 
-const Settings = ({ isOpen, onClose }) => {
-  const { user } = useContext(UserContext);
+const Settings = ({ isOpen, onClose, user }) => {
   const [userProfile, setUserProfile] = useState({
-    name: user ? user.name : "",
-    profilePicture: user ? user.picture : "",
-    email: user ? user.email : "",
-    showEmail: user ? false : "",
+    name: "",
+    profilePicture: "",
+    email: "",
+    showEmail: false,
   });
 
+  useEffect(() => {
+    if (user) {
+      setUserProfile({
+        name: user.name || "",
+        profilePicture: user.picture || "",
+        email: user.email || "",
+        showEmail: false,
+      });
+    } else {
+      setUserProfile();
+    }
+  }, [user]);
+
+  console.log("userProfile: ", userProfile, "user: ", user);
   // Function to update profile information
   const updateProfile = (updatedProfile) => {
     setUserProfile(updatedProfile);
