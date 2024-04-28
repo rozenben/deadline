@@ -48,6 +48,7 @@ const GoogleAuthComponent = () => {
         name: result.user.displayName,
         email: result.user.email,
         userId: userId,
+        // picture: result.user.photoURL,
       };
       updateUser(userObject); // Update user context with the obtained user data
     } catch (error) {

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // Profile Information Display Component
 const ProfileInfo = ({ userProfile }) => {
   return (
-    <div style={{fontSize: 10}}>
-      <img src={userProfile.profilePicture} alt="Profile" style={{ width: '100px', height: '100px' }} />
-      <br/>
-      <strong >{userProfile.name}</strong>
-      <p className='mb-1'>Bio: {userProfile.bio}</p>
+    <div style={{ fontSize: 10 }}>
+      <img
+        src={userProfile.profilePicture}
+        alt="Profile"
+        style={{ width: "100px", height: "100px" }}
+      />
+      <br />
+      <strong>{userProfile.name}</strong>
       <p>Email: {userProfile.email}</p>
       {/* Display other profile information */}
     </div>
@@ -69,15 +72,15 @@ const PrivacySettings = ({ userProfile }) => {
 const DeleteAccount = ({ onDelete }) => {
   const handleDelete = () => {
     // Display confirmation dialog
-    const confirmDelete = window.confirm("Are you sure you want to delete your account?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account?"
+    );
     if (confirmDelete) {
       onDelete();
     }
   };
 
-  return (
-    <button onClick={handleDelete}>Delete Account</button>
-  );
+  return <button onClick={handleDelete}>Delete Account</button>;
 };
 
 // Profile Component
