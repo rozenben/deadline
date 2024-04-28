@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-import React, { useState } from 'react';
+import React, {useContext , useState } from 'react';
 import NewTaskForm from './NewTaskForm';
 import Task from './Task';
+import { UserContext } from './UserContext'; // example how to use with "user" in another components
 
 const Tabs = () => {
+  const { user } = useContext(UserContext); // Access user context -> // example how to use with "user" in another components
   const [activeTab, setActiveTab] = useState('my-tasks');
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
   const [myTasks, setMyTasks] = useState([
@@ -34,6 +36,7 @@ const Tabs = () => {
 
 
   const handleNewTaskSubmit = async (taskData) => {
+    console.log('Clicked! User:', user.displayName, user.email); // example how to use with "user" in another components
     // Create a new task object
     const newTask = {
       task_name: taskData.title,

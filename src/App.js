@@ -8,7 +8,7 @@ import Settings from './components/Settings';
 import firebase from 'firebase/compat/app'; // Import Firebase app module
 import 'firebase/compat/auth'; // Import Firebase authentication module
 import GoogleAuthComponent from './components/GoogleAuthComponent'
-
+import { UserProvider } from './components/UserContext'; // Import UserProvider from UserContext
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -35,6 +35,7 @@ function App() {
 
 
   return (
+    <UserProvider> 
     <div className="container-fluid" style={{ backgroundColor: '#efdba8', color:'#1c76ff'}}>
       <div className="row">
         <div className="col-md-9">
@@ -53,6 +54,7 @@ function App() {
         <GoogleAuthComponent/>
       </div>
     </div>
+    </UserProvider> 
   );
 }
 
