@@ -1,6 +1,7 @@
 // src/App.js
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from './components/UserContext';
 import './App.css'
 import Tabs from './components/Tabs';
 import Settings from './components/Settings';
@@ -26,36 +27,38 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function App() {
-
+  
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
-
-
+  console.log("user: ", user)
   return (
-    <UserProvider> 
-    <div className="container-fluid" style={{ backgroundColor: '#efdba8', color:'#1c76ff'}}>
-      <div className="row">
-        <div className="col-md-9">
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <h1 >Deadline</h1>
-              <h4 >Community of Tasks</h4>
+    <UserProvider user={user} updateUser={setUser}> 
+      <div className="container-fluid" style={{ backgroundColor: '#efdba8', color:'#1c76ff'}}>
+        <div className="row">
+          <div className="col-md-9">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h1 >Deadline</h1>
+                <h4 >Community of Tasks</h4>
+              </div>
+              <button className="btn btn-outline-secondary" onClick={toggleSettings}>
+                <i className="fas fa-cog"></i> {/* Font Awesome setting icon */}
+              </button>
             </div>
-            <button className="btn btn-outline-secondary" onClick={toggleSettings}>
-              <i className="fas fa-cog"></i> {/* Font Awesome setting icon */}
-            </button>
-            </div>
-          <Tabs />
+            {user && <Tabs />}
+          </div>
+          <Settings isOpen={isSettingsOpen} onClose={toggleSettings} />
+          <GoogleAuthComponent/>
         </div>
-        <Settings isOpen={isSettingsOpen} onClose={toggleSettings} />
-        <GoogleAuthComponent/>
       </div>
-    </div>
     </UserProvider> 
   );
 }
+
+
 
 export default App;

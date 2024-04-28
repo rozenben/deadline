@@ -34,6 +34,8 @@ const GoogleAuthComponent = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     try {
         const result = await firebase.auth().signInWithPopup(provider);
+        console.log(result.user)
+        console.log(updateUser)
         updateUser(result.user); // Update user context with the obtained user data
       const { displayName, email } = result.user;
       const userData = {
