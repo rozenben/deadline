@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import firebase from 'firebase/compat/app'; // Import Firebase app module
 import 'firebase/compat/auth'; // Import Firebase authentication module
-import { UserContext } from './UserContext'; // Import UserContext
+import { UserContext } from './MainProvider';
 
 const GoogleAuthComponent = () => {
   const { user, updateUser } = useContext(UserContext); // Access user context
