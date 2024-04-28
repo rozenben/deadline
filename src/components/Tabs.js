@@ -1,27 +1,36 @@
-import axios from 'axios';
+import axios from "axios";
 
-import React, {useContext , useState } from 'react';
-import NewTaskForm from './NewTaskForm';
-import Task from './Task';
-
+import React, { useContext, useState, useEffect } from "react";
+import NewTaskForm from "./NewTaskForm";
+import Task from "./Task";
+import { UserContext } from "./MainProvider";
 
 const Tabs = () => {
-  const [activeTab, setActiveTab] = useState('my-tasks');
+  const { user } = useContext(UserContext); // Access user context
+  const [activeTab, setActiveTab] = useState("my-tasks");
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
-  const [myTasks, setMyTasks] = useState([
-    {
-      name: 'Task 1',
-      description: 'Description of Task 1',
-      dates: ['2024-04-25', '2024-04-26'],
-      jackpot: 50
-    },
-    {
-      name: 'Task 2',
-      description: 'Description of Task 2',
-      dates: ['2024-04-27', '2024-04-28'],
-      jackpot: 450
-    }
-  ]);
+  const [myTasks, setMyTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/tasks/${user.userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch tasks");
+        }
+        const data = await response.json();
+        console.log("data.tasks: ", data.tasks);
+        setMyTasks(data.tasks || []); // Ensure tasks is initialized as an empty array if it's not present in the response
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    // Call the fetchTasks function when the component mounts
+    fetchTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [followTasks, setFollowTasks] = useState([]);
 
@@ -33,76 +42,83 @@ const Tabs = () => {
     setShowNewTaskForm(!showNewTaskForm);
   };
 
-
   const handleNewTaskSubmit = async (taskData) => {
     // Create a new task object
     const newTask = {
       task_name: taskData.title,
       description: taskData.description,
-      creator_id: 14,
+      creator_id: user.userId,
       dates: [taskData.dueDate],
-      jackpot: taskData.jackpot
+      jackpot: taskData.jackpot,
     };
-    console.log(newTask)
+    console.log(newTask);
     setMyTasks([...myTasks, newTask]);
     try {
       // Make a POST request to the API endpoint
-      const response = await axios.post('http://localhost:8000/tasks/', newTask); // TODO 
-      console.log('Task created successfully:', response.data);
+      const response = await axios.post(
+        "http://localhost:8000/tasks/",
+        newTask
+      ); // TODO
+      console.log("Task created successfully:", response.data);
       // Update the tasks state or perform any necessary actions
     } catch (error) {
-      console.error('Error creating task:', error);
+      console.error("Error creating task:", error);
     }
-  
+
     // Close the new task form
     setShowNewTaskForm(false);
   };
-  
 
   return (
-    <div >
+    <div>
       <ul className="nav nav-tabs">
-        <li className="nav-item" >
+        <li className="nav-item">
           <button
-            className={`nav-link ${activeTab === 'my-tasks' ? 'active' : ''}`}
-            onClick={() => handleTabClick('my-tasks')}
-            style={{backgroundColor: '#fddea8'}}
+            className={`nav-link ${activeTab === "my-tasks" ? "active" : ""}`}
+            onClick={() => handleTabClick("my-tasks")}
+            style={{ backgroundColor: "#fddea8" }}
           >
             My Tasks
           </button>
         </li>
         <li className="nav-item">
           <button
-            className={`nav-link ${activeTab === 'follow-tasks' ? 'active' : ''}`}
-            onClick={() => handleTabClick('follow-tasks')}
-            style={{backgroundColor: '#fddea8'}}
+            className={`nav-link ${
+              activeTab === "follow-tasks" ? "active" : ""
+            }`}
+            onClick={() => handleTabClick("follow-tasks")}
+            style={{ backgroundColor: "#fddea8" }}
           >
             Follow Tasks
           </button>
         </li>
       </ul>
       <div className="tab-content mt-2">
-        <div className={`tab-pane ${activeTab === 'my-tasks' ? 'active' : ''}`} id="my-tasks">
+        <div
+          className={`tab-pane ${activeTab === "my-tasks" ? "active" : ""}`}
+          id="my-tasks"
+        >
           <h2>My Tasks</h2>
           <div>
             {myTasks.length > 0 ? (
-              myTasks.map((task, index) => (
-                <Task key={index} {...task} />
-              ))
+              myTasks.map((task, index) => <Task key={index} {...task} />)
             ) : (
               <p>No tasks available</p>
             )}
           </div>
-          <button className="btn btn-primary" onClick={toggleNewTaskForm}>Create a new task</button>
+          <button className="btn btn-primary" onClick={toggleNewTaskForm}>
+            Create a new task
+          </button>
           {showNewTaskForm && <NewTaskForm onSubmit={handleNewTaskSubmit} />}
         </div>
-        <div className={`tab-pane ${activeTab === 'follow-tasks' ? 'active' : ''}`} id="follow-tasks">
+        <div
+          className={`tab-pane ${activeTab === "follow-tasks" ? "active" : ""}`}
+          id="follow-tasks"
+        >
           <h2>Follow Tasks</h2>
           <div>
             {followTasks.length > 0 ? (
-              followTasks.map((task, index) => (
-                <Task key={index} {...task} />
-              ))
+              followTasks.map((task, index) => <Task key={index} {...task} />)
             ) : (
               <p>No follow tasks found</p>
             )}
